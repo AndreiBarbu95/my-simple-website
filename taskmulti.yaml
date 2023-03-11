@@ -4,14 +4,17 @@ steps:
   - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
 
   # Run image 
-  - cmd: docker run -d -p 8080:80 --name test {{.Run.Registry}}/simple:{{.Run.ID}}
+- cmd: -t {{.Run.Registry}}/hello-world:{{.Run.ID}}
+  id: test
+  detach: true
+  ports: ["8080:80"]
 
   # Stop the container and print container ID
-  - cmd: |
+- cmd: |
       container_id=$(docker ps -aqf "name=test")
-      docker stop $container_id
-      echo "The container with ID $container_id was stopped"
-      
+      docker stop "${container_id}"
+      echo "The container with ID ${container_id} was stopped"
+
   # Push image
   - push:
       - {{.Run.Registry}}/simple:{{.Run.ID}}
