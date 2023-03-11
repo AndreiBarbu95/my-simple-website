@@ -1,21 +1,24 @@
 version: v1.1.0
 steps:
   # Build target image
-  - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
+  - build: 
+      dockerfile: Dockerfile 
+      image: {{.Run.Registry}}/simple:{{.Run.ID}}
 
   # Run image 
-  - cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
+  - cmd: 
+      image: {{.Run.Registry}}/simple:{{.Run.ID}}
+      detach: true
+      ports: ["8080:80"]
     id: test
-    detach: true
-    ports: ["8080:80"]
 
   # Stop the container and print container ID
   - cmd: |
       container_id=$(docker ps -aqf "name=test")
-      echo "Container ID: $container_id"
       docker stop "${container_id}"
-      echo "The container with ID ${container_id} was stopped"
+      echo "Container ID: $container_id"
+    displayName: 'Stop and Print Container ID'
 
   # Push image
   - push:
-      - {{.Run.Registry}}/simple:{{.Run.ID}}
+      images: "{{.Run.Registry}}/simple:{{.Run.ID}}"
