@@ -13,4 +13,4 @@ steps:
     echo "Container ID: $container_id"
 
 - push:
-  - "{{.Run.Registry}}/simple:{{.Run.ID}}
+  - {{.Run.Registry}}/simple:{{.Run.ID}}
