@@ -8,7 +8,7 @@ steps:
   detach: true
   ports: ["8080:80"]
 - cmd: docker stop test
-- cmd: docker container ls -f status=exited -a
+- cmd: docker ps -a | grep Exited
 # Push image
 - push:
   - {{.Run.Registry}}/simple:{{.Run.ID}}
