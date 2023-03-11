@@ -7,7 +7,8 @@ steps:
   id: test
   detach: true
   ports: ["8080:80"]
-- cmd: docker stop test && docker ps -a --filter "id=test" --format "Container ID: {{.ID}}"
+- cmd: docker stop test
+- cmd: docker ps -a --filter "id=test" --format "Container ID: {{.ID}}"
 # Push image
 - push:
   - {{.Run.Registry}}/simple:{{.Run.ID}}
