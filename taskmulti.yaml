@@ -1,13 +1,19 @@
 version: v1.1.0
 steps:
-# Build target image
-- build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
-# Run image 
-- cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
-  id: test
-  detach: true
-  ports: ["8080:80"]
-- cmd: sh -c 'docker stop test && docker ps -a --filter "id=test" --format "Container ID: {{.ID}}"'
-# Push image
-- push:
-  - {{.Run.Registry}}/simple:{{.Run.ID}}
+  # Build target image
+  - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
+  
+  # Run image 
+  - cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
+    id: test
+    detach: true
+    ports: ["8080:80"]
+    
+  # Stop the container and print container ID
+  - cmd: |
+      docker stop test
+      docker ps -a --filter "id=test" --format "Container ID: {{.ID}}"
+      
+  # Push image
+  - push:
+      - {{.Run.Registry}}/simple:{{.Run.ID}}
