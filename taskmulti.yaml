@@ -1,23 +1,16 @@
 version: v1.1.0
 steps:
-- build:
-    dockerfile: Dockerfile
-    image: "{{.Run.Registry}}/simple:{{.Run.ID}}"
-  displayName: 'Build target image'
+- build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
 
-- cmd:
-    image: "{{.Run.Registry}}/simple:{{.Run.ID}}"
-    detach: true
-    ports: ["8080:80"]
+- cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
+  detach: true
+  ports: ["8080:80"]
   id: test
-  displayName: 'Run image'
 
 - cmd: |
     container_id=$(docker ps -aqf "name=test")
     docker stop "${container_id}"
     echo "Container ID: $container_id"
-  displayName: 'Stop and Print Container ID'
 
 - push:
-    images: "{{.Run.Registry}}/simple:{{.Run.ID}}"
-  displayName: 'Push image'
+  - "{{.Run.Registry}}/simple:{{.Run.ID}}
