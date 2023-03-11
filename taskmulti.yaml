@@ -2,7 +2,8 @@ version: v1.1.0
 steps:
 - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
 
-- cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
+- cmd: 
+  image: {{.Run.Registry}}/simple:{{.Run.ID}}
   detach: true
   ports: ["8080:80"]
   id: test
