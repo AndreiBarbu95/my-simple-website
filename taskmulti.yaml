@@ -4,7 +4,7 @@ steps:
 - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
 
   # Run image 
-- cmd: -t {{.Run.Registry}}/hello-world:{{.Run.ID}}
+- cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
   id: test
   detach: true
   ports: ["8080:80"]
