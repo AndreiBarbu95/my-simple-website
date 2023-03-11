@@ -1,2 +1,3 @@
 FROM nginx:alpine
 ENV BACKGROUND_COLOR=red
+RUN sed -i "s/BGCOLOR/${BACKGROUND_COLOR}/" /usr/share/nginx/html/index.html
