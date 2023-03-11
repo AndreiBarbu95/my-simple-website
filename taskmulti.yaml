@@ -7,6 +7,7 @@ steps:
   id: test
   detach: true
   ports: ["8080:80"]
+ - cmd: docker ps -a
 - cmd: docker stop test
 - cmd: docker ps -a
 # Push image
