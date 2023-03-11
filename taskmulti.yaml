@@ -11,6 +11,5 @@ steps:
     container_id=$(docker ps -aqf "name=test")
     docker stop "${container_id}"
     echo "Container ID: $container_id"
-
 - push:
-  - {{.Run.Registry}}/simple:{{.Run.ID}}
+  - "{{.Run.Registry}}/simple:{{.Run.ID}}"
