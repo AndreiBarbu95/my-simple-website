@@ -1,7 +1,7 @@
 version: v1.1.0
 steps:
 - build:
-    dockerfile: Dockerfile 
+    dockerfile: Dockerfile
     image: "{{.Run.Registry}}/simple:{{.Run.ID}}"
   displayName: 'Build target image'
 
@@ -10,7 +10,7 @@ steps:
     detach: true
     ports: ["8080:80"]
   id: test
-  displayName: 'Run target image'
+  displayName: 'Run image'
 
 - cmd: |
     container_id=$(docker ps -aqf "name=test")
@@ -19,5 +19,5 @@ steps:
   displayName: 'Stop and Print Container ID'
 
 - push:
-  images: "{{.Run.Registry}}/simple:{{.Run.ID}}"
-  displayName: 'Push target image'
+    images: "{{.Run.Registry}}/simple:{{.Run.ID}}"
+  displayName: 'Push image'
