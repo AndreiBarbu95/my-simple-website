@@ -1,16 +1,14 @@
 version: v1.1.0
 steps:
+# Build target image
 - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
-
-- cmd: 
-  image: {{.Run.Registry}}/simple:{{.Run.ID}}
+# Run image 
+- cmd: -t {{.Run.Registry}}/simple:{{.Run.ID}}
+  id: test
   detach: true
   ports: ["8080:80"]
-  id: test
-
-- cmd: |
-    container_id=$(docker ps -aqf "name=test")
-    docker stop "${container_id}"
-    echo "Container ID: $container_id"
+- cmd: docker stop test
+- cmd: docker container ls -f status=exited -a
+# Push image
 - push:
-  - "{{.Run.Registry}}/simple:{{.Run.ID}}"
+  - {{.Run.Registry}}/simple:{{.Run.ID}}
