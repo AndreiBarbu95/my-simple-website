@@ -1,13 +1,13 @@
 version: v1.1.0
 steps:
   # Build target image
-  - build: 
+  - build:
       dockerfile: Dockerfile 
-      image: {{.Run.Registry}}/simple:{{.Run.ID}}
+      image: "{{.Run.Registry}}/simple:{{.Run.ID}}"
 
   # Run image 
-  - cmd: 
-      image: {{.Run.Registry}}/simple:{{.Run.ID}}
+  - cmd:
+      image: "{{.Run.Registry}}/simple:{{.Run.ID}}"
       detach: true
       ports: ["8080:80"]
     id: test
