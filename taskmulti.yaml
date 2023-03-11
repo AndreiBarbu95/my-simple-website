@@ -1,7 +1,7 @@
 version: v1.1.0
 steps:
   # Build target image
-  - build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
+- build: -t {{.Run.Registry}}/simple:{{.Run.ID}} -f Dockerfile .
 
   # Run image 
 - cmd: -t {{.Run.Registry}}/hello-world:{{.Run.ID}}
@@ -16,5 +16,5 @@ steps:
       echo "The container with ID ${container_id} was stopped"
 
   # Push image
-  - push:
-      - {{.Run.Registry}}/simple:{{.Run.ID}}
+- push:
+  - {{.Run.Registry}}/simple:{{.Run.ID}}
